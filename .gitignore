@@ -1,0 +1,9 @@
+.Rhistory
+.RData
+.Rproj.user/
+data/input/*.csv
+data/*.sqlite
+data/*.sqlite-shm
+data/*.sqlite-wal
+models/*.rds
+output/*.csv
