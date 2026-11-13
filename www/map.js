@@ -13,11 +13,11 @@
   function countryStyle(feature) {
     const key = countryKey(feature);
     return {
-      color: key === selectedKey ? "#5eead4" : "#71839b",
-      weight: key === selectedKey ? 2 : 0.8,
-      opacity: key === selectedKey ? 1 : 0.75,
-      fillColor: key === selectedKey ? "#14b8a6" : "#17304d",
-      fillOpacity: key === selectedKey ? 0.48 : 0.28,
+      color: key === selectedKey ? "#ffe36e" : "#d9d3bb",
+      weight: key === selectedKey ? 2.5 : 0.8,
+      opacity: key === selectedKey ? 1 : 0.8,
+      fillColor: key === selectedKey ? "#ffe36e" : "#65745d",
+      fillOpacity: key === selectedKey ? 0.4 : 0.12,
     };
   }
 
@@ -51,7 +51,7 @@
     layer.on({
       mouseover: function () {
         if (countryKey(feature) !== selectedKey) {
-          layer.setStyle({ color: "#93c5fd", weight: 1.7, fillColor: "#2563eb", fillOpacity: 0.42 });
+          layer.setStyle({ color: "#fff2a8", weight: 1.7, fillColor: "#ffe36e", fillOpacity: 0.28 });
         }
       },
       mouseout: function () {
@@ -125,10 +125,9 @@
       zoomControl: true,
     }).setView([22, 8], 2);
 
-    L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
+    L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
       attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-      subdomains: "abcd",
+        "Imagery &copy; Esri and contributors",
       maxZoom: 7,
     }).addTo(map);
 

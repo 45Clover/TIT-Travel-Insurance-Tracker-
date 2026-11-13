@@ -61,9 +61,6 @@ build_model_formula <- function(data) {
     trip_days = "log1p(trip_days)",
     medical_limit = "log1p(medical_limit)",
     deductible = "log1p(deductible)",
-    cancellation_limit = "log1p(cancellation_limit)",
-    baggage_limit = "log1p(baggage_limit)",
-    pre_existing_conditions_covered = "pre_existing_conditions_covered",
     event_count_90d = "event_count_90d",
     max_event_severity_90d = "max_event_severity_90d"
   )
@@ -122,8 +119,6 @@ train_tracker_model <- function(data, target_currency, model_path) {
     "trip_id", "quoted_at", "currency", "premium_per_traveler", "trip_days",
     "age_band", "origin_country_code", "destination_country_code",
     "coverage_plan_id", "medical_limit", "deductible",
-    "cancellation_limit", "baggage_limit",
-    "pre_existing_conditions_covered",
     "event_count_90d", "max_event_severity_90d",
     "event_categories_90d"
   )
@@ -148,7 +143,7 @@ train_tracker_model <- function(data, target_currency, model_path) {
   }
   data <- prepare_event_category_features(data)
 
-  quote_times <- parse_iso_timestamp(data$quoted_at)
+  quote_times <- as.POSIXct(data$quoted_at, tz = "UTC")
   if (anyNA(quote_times)) {
     stop("quoted_at must contain ISO-8601 timestamps.", call. = FALSE)
   }
@@ -234,8 +229,7 @@ predict_tracker_model <- function(artifact, data) {
   features <- c(
     "trip_days", "age_band", "origin_country_code",
     "destination_country_code", "coverage_plan_id",
-    "medical_limit", "deductible", "cancellation_limit",
-    "baggage_limit", "pre_existing_conditions_covered", "event_count_90d",
+    "medical_limit", "deductible", "event_count_90d",
     "max_event_severity_90d", "event_categories_90d"
   )
   missing <- setdiff(features, names(data))
